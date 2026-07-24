@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}
+Restaurant
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-5xl mx-auto px-6 py-12">
+
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+
+        <div class="bg-lime-700 px-8 py-6">
+
+            <h1 class="text-3xl font-bold text-white">
+
+                {% if form.instance.pk %}
+
+                    Edit Restaurant
+
+                {% else %}
+
+                    Add Restaurant
+
+                {% endif %}
+
+            </h1>
+
+            <p class="text-lime-100 mt-2">
+
+                Fill in the restaurant information below.
+
+            </p>
+
+        </div>
+
+        <div class="p-8">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="grid md:grid-cols-2 gap-6">
+
+                    {% for field in form %}
+
+                        {% include "components/form_field.html" with field=field %}
+
+                    {% endfor %}
+
+                </div>
+
+                <div class="mt-8 flex flex-wrap gap-4">
+
+                    <button
+                        type="submit"
+                        class="bg-lime-700 hover:bg-lime-800 transition text-white px-8 py-3 rounded-xl font-semibold">
+
+                        Save Restaurant
+
+                    </button>
+
+                    <a
+                        href="{% url 'restaurant_list' %}"
+                        class="border border-gray-300 hover:bg-gray-100 px-8 py-3 rounded-xl font-semibold">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

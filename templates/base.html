@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>{% block title %}Food Delivery{% endblock %}</title>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-stone-100 min-h-screen flex flex-col">
+
+    {% include "components/navbar.html" %}
+
+    {% include "components/alerts.html" %}
+
+    <main class="flex-grow max-w-7xl mx-auto w-full px-6 py-8">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% include "components/footer.html" %}
+
+    <script src="{% static 'js/app.js' %}"></script>
+
+</body>
+
+</html>

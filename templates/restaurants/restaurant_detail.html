@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}
+Restaurant Details
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-5xl mx-auto py-10 px-6">
+
+    <div class="bg-white rounded-xl shadow-xl overflow-hidden">
+
+        {% if restaurant.image %}
+
+        <img
+            src="{{ restaurant.image.url }}"
+            class="w-full h-96 object-cover">
+
+        {% endif %}
+
+        <div class="p-8">
+
+            <h1 class="text-4xl font-bold text-lime-800">
+
+                {{ restaurant.name }}
+
+            </h1>
+
+            <div class="space-y-4 mt-6">
+
+                <p>
+
+                    <strong>Address :</strong>
+
+                    {{ restaurant.address }}
+
+                </p>
+
+                <p>
+
+                    <strong>Phone :</strong>
+
+                    {{ restaurant.phone }}
+
+                </p>
+
+                <p>
+
+                    <strong>Email :</strong>
+
+                    {{ restaurant.email }}
+
+                </p>
+
+                <p>
+
+                    <strong>Description :</strong>
+
+                    {{ restaurant.description }}
+
+                </p>
+
+            </div>
+
+            <div class="mt-8 flex gap-4">
+
+                <a
+                    href="{% url 'restaurant_edit' restaurant.id %}"
+                    class="bg-yellow-500 text-white px-5 py-3 rounded-lg">
+
+                    Edit
+
+                </a>
+
+                <a
+                    href="{% url 'restaurant_delete' restaurant.id %}"
+                    class="bg-red-500 text-white px-5 py-3 rounded-lg">
+
+                    Delete
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Payment Success{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 text-center">
+
+    <div class="alert alert-success">
+
+        <h2>Payment Successful!</h2>
+
+        <p>Your payment has been recorded.</p>
+
+        <h4>Order #{{ order.id }}</h4>
+
+        <h4>Total: ₹{{ order.total_amount }}</h4>
+
+        <a
+            href="{% url 'food_list' %}"
+            class="btn btn-primary">
+
+            Continue Shopping
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

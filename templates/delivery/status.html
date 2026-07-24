@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}
+Delivery Status
+{% endblock %}
+
+{% block content %}
+
+<h2>Delivery Status</h2>
+
+<hr>
+
+<p>
+    <strong>Order ID:</strong>
+    {{ order.id }}
+</p>
+
+<p>
+    <strong>Customer:</strong>
+    {{ order.customer.username }}
+</p>
+
+<p>
+    <strong>Total:</strong>
+    ₹{{ order.total_amount }}
+</p>
+
+<p>
+    <strong>Address:</strong>
+    {{ delivery.delivery_address }}
+</p>
+
+<p>
+    <strong>Status:</strong>
+
+    {% if delivery.delivery_status == "Pending" %}
+        🟡 Pending
+    {% elif delivery.delivery_status == "Preparing" %}
+        👨‍🍳 Preparing
+    {% elif delivery.delivery_status == "Out for Delivery" %}
+        🚚 Out for Delivery
+    {% elif delivery.delivery_status == "Delivered" %}
+        ✅ Delivered
+    {% endif %}
+</p>
+
+<hr>
+
+<a href="{% url 'menu' %}" class="btn btn-primary">
+    Continue Shopping
+</a>
+
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Delivery Status{% endblock %}
+
+{% block content %}
+
+<div class="max-w-3xl mx-auto">
+
+    <div class="bg-white rounded-2xl shadow-lg p-8">
+
+        <h1 class="text-3xl font-bold text-center text-lime-700 mb-8">
+            🚚 Delivery Status
+        </h1>
+
+        <div class="space-y-6">
+
+            <div class="flex justify-between border-b pb-3">
+                <span class="font-semibold">Order ID</span>
+                <span>#{{ order.id }}</span>
+            </div>
+
+            <div class="flex justify-between border-b pb-3">
+                <span class="font-semibold">Delivery Status</span>
+
+                <span class="
+                    px-4 py-2 rounded-full
+                    bg-yellow-100
+                    text-yellow-700
+                    font-semibold">
+
+                    {{ delivery.delivery_status }}
+
+                </span>
+            </div>
+
+            <div class="flex justify-between border-b pb-3">
+                <span class="font-semibold">Delivery Address</span>
+
+                <span class="text-right">
+                    {{ delivery.delivery_address }}
+                </span>
+            </div>
+
+        </div>
+
+        <div class="mt-10">
+
+            <h2 class="font-semibold text-xl mb-4">
+                Delivery Progress
+            </h2>
+
+            <div class="w-full bg-gray-200 rounded-full h-4">
+
+                <div class="bg-lime-600 h-4 rounded-full" style="width:35%">
+                </div>
+
+            </div>
+
+            <div class="flex justify-between mt-3 text-sm text-gray-600">
+
+                <span>Preparing</span>
+
+                <span>Out for Delivery</span>
+
+                <span>Delivered</span>
+
+            </div>
+
+        </div>
+
+        <hr class="my-8">
+
+        <h2 class="text-2xl font-bold text-lime-700 mb-5">
+            ⭐ Rate Your Food
+        </h2>
+
+        <div class="space-y-4">
+
+            {% for item in order_items %}
+
+            <div class="flex justify-between items-center bg-gray-50 rounded-xl p-4">
+
+                <div>
+
+                    <h3 class="font-semibold text-lg">
+                        {{ item.food.name }}
+                    </h3>
+
+                    <p class="text-gray-500">
+                        ₹ {{ item.food.price }}
+                    </p>
+
+                </div>
+
+                <a href="{% url 'add_review' order.items.first.food.id %}"
+                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-xl inline-block">
+                    ⭐ Review Food
+                </a>
+
+            </div>
+
+            {% empty %}
+
+            <p class="text-gray-500">
+                No food items found.
+            </p>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="text-center mt-10">
+
+            <a href="{% url 'food_list' %}" class="bg-lime-600 hover:bg-lime-700 text-white px-8 py-3 rounded-xl">
+                🍽️ Order More Food
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

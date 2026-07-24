@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+Order Success
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 text-center">
+
+    <div class="alert alert-success">
+
+        <h2>
+            🎉 Order Placed Successfully!
+        </h2>
+
+        <hr>
+
+        <h4>
+            Order ID : {{ order.id }}
+        </h4>
+
+        <h4>
+            Total Amount : ₹{{ order.total_amount }}
+        </h4>
+
+        <h4>
+            Status : {{ order.status }}
+        </h4>
+
+        <br>
+
+        <a
+            href="{% url 'food_list' %}"
+            class="btn btn-primary">
+
+            Continue Shopping
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
