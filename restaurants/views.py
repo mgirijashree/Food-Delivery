@@ -85,3 +85,24 @@ def restaurant_delete(request, pk):
             "restaurant": restaurant,
         },
     )
+
+
+
+
+def restaurant_menu(request, pk):
+
+    restaurant = get_object_or_404(
+        Restaurant,
+        id=pk
+    )
+
+    foods = restaurant.food_items.all()
+
+    return render(
+        request,
+        "restaurants/restaurant_menu.html",
+        {
+            "restaurant": restaurant,
+            "foods": foods,
+        }
+    )

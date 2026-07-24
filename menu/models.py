@@ -16,11 +16,21 @@ class FoodCategory(models.Model):
         return f"{self.restaurant.name} - {self.name}"
 
 class FoodItem(models.Model):
+
+    restaurant = models.ForeignKey(
+        Restaurant,
+        on_delete=models.CASCADE,
+        related_name="food_items"
+    )
+    
+
     category = models.ForeignKey(
         FoodCategory,
         on_delete=models.CASCADE,
         related_name="foods"
     )
+
+    
 
     name = models.CharField(max_length=150)
 

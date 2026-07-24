@@ -12,6 +12,9 @@ class RestaurantForm(forms.ModelForm):
 
         super().__init__(*args, **kwargs)
 
+        
+        print(self.fields["owner"].queryset)
+
         common_class = (
             "w-full rounded-xl border-2 border-lime-300 "
             "bg-white px-4 py-3 text-gray-700 "

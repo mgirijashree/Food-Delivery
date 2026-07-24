@@ -8,6 +8,13 @@ urlpatterns = [
     path("add/", views.restaurant_create, name="restaurant_add"),
 
     path(
+        "<int:pk>/menu/",
+        views.restaurant_menu,
+        name="restaurant_menu"
+    ),
+
+    
+    path(
         "edit/<int:pk>/",
         views.restaurant_update,
         name="restaurant_edit",
