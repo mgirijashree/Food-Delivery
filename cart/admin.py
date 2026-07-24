@@ -1,15 +1,29 @@
 from django.contrib import admin
-from .models import Cart
+
+from .models import Cart, CartItem
+
 
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
+
     list_display = (
-        "customer",
+        "user",
+        "created_at",
+    )
+
+
+
+@admin.register(CartItem)
+class CartItemAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "cart",
         "food",
         "quantity",
+        "added_at",
     )
 
     list_filter = (
-        "customer",
+        "food",
     )
