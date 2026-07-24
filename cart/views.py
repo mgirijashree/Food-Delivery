@@ -22,19 +22,44 @@ def cart_list(request):
 
 
 @login_required
-def add_to_cart(request, food_id):
-    food = get_object_or_404(FoodItem, id=food_id)
 
-    cart_item, created = Cart.objects.get_or_create(
-        customer=request.user,
-        food=food,
+def add_to_cart(request, id):
+
+    food = get_object_or_404(
+        FoodItem,
+        id=id
     )
 
-    if not created:
-        cart_item.quantity += 1
-        cart_item.save()
 
-    return redirect("cart")
+    cart = request.session.get(
+        "cart",
+        {}
+    )
+
+
+    food_id = str(food.id)
+
+
+    if food_id in cart:
+
+        cart[food_id] += 1
+
+    else:
+
+        cart[food_id] = 1
+
+
+    request.session["cart"] = cart
+
+    request.session.modified = True
+
+
+    return redirect(
+        request.META.get(
+            "HTTP_REFERER",
+            "/menu/"
+        )
+    )
 
 
 @login_required

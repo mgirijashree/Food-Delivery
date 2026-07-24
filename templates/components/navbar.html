@@ -2,19 +2,18 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div class="flex justify-between items-center h-16">
+        <div class="flex items-center justify-between h-16">
 
 
             <!-- Logo -->
 
-            <a href="{% url 'home' %}"
-               class="flex items-center gap-2 text-white">
+            <a href="{% url 'home' %}" class="flex items-center gap-2 text-white">
 
                 <span class="text-3xl">
                     🍽️
                 </span>
 
-                <span class="text-xl sm:text-2xl font-bold">
+                <span class="text-lg sm:text-2xl font-bold whitespace-nowrap">
                     Food Delivery
                 </span>
 
@@ -22,22 +21,19 @@
 
 
 
-            <!-- Desktop Navigation -->
+            <!-- Desktop Menu -->
 
-            <div class="hidden md:flex items-center gap-6">
+            <div class="hidden md:flex items-center gap-5 lg:gap-8">
 
 
-                <a href="{% url 'home' %}"
-                   class="text-white hover:text-amber-300 transition">
+                <a href="{% url 'home' %}" class="text-white hover:text-amber-300 transition">
 
                     Home
 
                 </a>
 
 
-
-                <a href="{% url 'restaurant_list' %}"
-                   class="text-white hover:text-amber-300 transition">
+                <a href="{% url 'restaurant_list' %}" class="text-white hover:text-amber-300 transition">
 
                     Restaurants
 
@@ -45,17 +41,33 @@
 
 
 
-                <a href="{% url 'cart' %}"
-                   class="text-white hover:text-amber-300 transition">
+                <!-- Cart -->
 
-                    Cart
+                <a href="{% url 'cart' %}" class="relative text-white hover:text-amber-300 transition">
+
+                    🛒 Cart
+
+
+                    {% if cart_count > 0 %}
+
+                    <span class="absolute -top-3 -right-5 
+                    bg-red-500 text-white
+                    text-xs font-bold
+                    px-2 py-1
+                    rounded-full">
+
+                        {{ cart_count }}
+
+                    </span>
+
+                    {% endif %}
+
 
                 </a>
 
 
 
-                <a href="/orders/"
-                   class="text-white hover:text-amber-300 transition">
+                <a href="/orders/" class="text-white hover:text-amber-300 transition">
 
                     Orders
 
@@ -63,41 +75,41 @@
 
 
 
+
                 {% if user.is_authenticated %}
 
 
-                    <a href="/dashboard/"
-                       class="text-white hover:text-amber-300 transition">
+                <a href="/dashboard/" class="text-white hover:text-amber-300 transition">
 
-                        Dashboard
+                    Dashboard
 
-                    </a>
+                </a>
 
 
-                    <a href="/accounts/logout/"
-                       class="bg-red-500 hover:bg-red-600 
-                              px-4 py-2 rounded-lg text-white">
 
-                        Logout
+                <a href="/accounts/logout/" class="bg-red-500 hover:bg-red-600
+                   px-4 py-2 rounded-lg
+                   text-white transition">
 
-                    </a>
+                    Logout
+
+                </a>
+
 
 
                 {% else %}
 
 
-                    <a href="/accounts/login/"
-                       class="bg-white text-lime-700
-                              px-5 py-2 rounded-lg
-                              font-semibold hover:bg-gray-100">
+                <a href="/accounts/login/" class="bg-white text-lime-700
+                   px-5 py-2 rounded-lg
+                   font-semibold hover:bg-gray-100">
 
-                        Login
+                    Login
 
-                    </a>
+                </a>
 
 
                 {% endif %}
-
 
 
             </div>
@@ -105,23 +117,17 @@
 
 
 
-            <!-- Mobile Hamburger Button -->
-
-            <button id="menu-btn"
-                    class="md:hidden text-white focus:outline-none">
+            <!-- Mobile Button -->
 
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-8 h-8"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor">
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
 
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M4 6h16M4 12h16M4 18h16"/>
+                <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+
+
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
 
 
                 </svg>
@@ -132,6 +138,7 @@
 
         </div>
 
+
     </div>
 
 
@@ -140,12 +147,11 @@
 
     <!-- Mobile Menu -->
 
-    <div id="mobile-menu"
-         class="hidden md:hidden bg-lime-800">
+
+    <div id="mobile-menu" class="hidden md:hidden bg-lime-800">
 
 
-        <a href="{% url 'home' %}"
-           class="block px-6 py-3 text-white hover:bg-lime-900">
+        <a href="{% url 'home' %}" class="mobile-link">
 
             Home
 
@@ -153,8 +159,7 @@
 
 
 
-        <a href="{% url 'restaurant_list' %}"
-           class="block px-6 py-3 text-white hover:bg-lime-900">
+        <a href="{% url 'restaurant_list' %}" class="mobile-link">
 
             Restaurants
 
@@ -162,17 +167,33 @@
 
 
 
-        <a href="/cart/"
-           class="block px-6 py-3 text-white hover:bg-lime-900">
 
-            Cart
+        <a href="{% url 'cart' %}" class="mobile-link flex justify-between">
+
+
+            <span>
+                🛒 Cart
+            </span>
+
+
+            {% if cart_count > 0 %}
+
+            <span class="bg-red-500 px-2 py-1
+            rounded-full text-xs">
+
+                {{ cart_count }}
+
+            </span>
+
+            {% endif %}
+
 
         </a>
 
 
 
-        <a href="/orders/"
-           class="block px-6 py-3 text-white hover:bg-lime-900">
+
+        <a href="/orders/" class="mobile-link">
 
             Orders
 
@@ -180,35 +201,38 @@
 
 
 
+
+
         {% if user.is_authenticated %}
 
 
-            <a href="/dashboard/"
-               class="block px-6 py-3 text-white hover:bg-lime-900">
+        <a href="/dashboard/" class="mobile-link">
 
-                Dashboard
+            Dashboard
 
-            </a>
-
+        </a>
 
 
-            <a href="/accounts/logout/"
-               class="block px-6 py-3 bg-red-500 text-white">
 
-                Logout
+        <a href="/accounts/logout/" class="block px-6 py-3 
+           bg-red-500 text-white">
 
-            </a>
+            Logout
+
+        </a>
+
 
 
         {% else %}
 
 
-            <a href="/accounts/login/"
-               class="block px-6 py-3 bg-white text-lime-700">
 
-                Login
+        <a href="/accounts/login/" class="block px-6 py-3
+           bg-white text-lime-700">
 
-            </a>
+            Login
+
+        </a>
 
 
         {% endif %}
@@ -221,33 +245,89 @@
 
 
 
-<script>
-
-document.addEventListener("DOMContentLoaded", function(){
 
 
-    const menuBtn = document.getElementById("menu-btn");
+<style>
+    .mobile-link {
 
-    const mobileMenu = document.getElementById("mobile-menu");
-
-
-
-    if(menuBtn && mobileMenu){
-
-
-        menuBtn.addEventListener("click", function(){
-
-
-            mobileMenu.classList.toggle("hidden");
-
-
-        });
-
+        display: block;
+        padding: 12px 24px;
+        color: white;
+        transition: 0.3s;
 
     }
 
 
-});
+    .mobile-link:hover {
+
+        background: #365314;
+
+    }
+</style>
+
+
+
+
+
+<script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+
+            const menuBtn =
+                document.getElementById("menu-btn");
+
+
+            const mobileMenu =
+                document.getElementById("mobile-menu");
+
+
+
+            const links =
+                document.querySelectorAll(".mobile-link");
+
+
+
+            if (menuBtn && mobileMenu) {
+
+
+                menuBtn.addEventListener(
+                    "click",
+                    function () {
+
+
+                        mobileMenu.classList.toggle("hidden");
+
+
+                    });
+
+
+            }
+
+
+
+
+            // close menu after click
+
+            links.forEach(
+                (link) => {
+
+
+                    link.addEventListener(
+                        "click",
+                        () => {
+
+                            mobileMenu.classList.add("hidden");
+
+                        });
+
+
+                });
+
+
+        });
 
 
 </script>
