@@ -27,8 +27,7 @@ Food Menu
 
             {% if food.image %}
 
-            <img src="{{ food.image.url }}"
-                 class="w-full h-56 object-cover">
+            <img src="{{ food.image.url }}" class="w-full h-56 object-cover">
 
             {% else %}
 
@@ -152,21 +151,15 @@ Food Menu
                                 {% for star in "12345" %}
 
 
-                                    {% if forloop.counter <= review.rating %}
-
+                                {% if forloop.counter <= review.rating %} ★ {% else %} <span class="text-gray-300">
                                     ★
-
-                                    {% else %}
-
-                                    <span class="text-gray-300">
-                                        ★
-                                    </span>
+                            </span>
 
 
-                                    {% endif %}
+                            {% endif %}
 
 
-                                {% endfor %}
+                            {% endfor %}
 
                             </span>
 
@@ -225,8 +218,7 @@ Food Menu
                 <div class="mt-6 flex flex-col sm:flex-row gap-3">
 
 
-                    <a href="{% url 'add_to_cart' food.id %}"
-                       class="bg-lime-700 hover:bg-lime-800 text-white text-center px-4 py-2 rounded-lg">
+                    <a href="{% url 'add_to_cart' food.id %}" class="bg-lime-700 text-white px-4 py-2 rounded-lg">
 
                         🛒 Add to Cart
 
@@ -235,7 +227,7 @@ Food Menu
 
 
                     <a href="{% url 'add_review' food.id %}"
-                       class="bg-yellow-500 hover:bg-yellow-600 text-white text-center px-4 py-2 rounded-lg">
+                        class="bg-yellow-500 hover:bg-yellow-600 text-white text-center px-4 py-2 rounded-lg">
 
                         ⭐ Review
 

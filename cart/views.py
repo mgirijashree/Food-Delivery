@@ -2,7 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from menu.models import FoodItem
-from .models import Cart
+from .models import Cart, CartItem
+
+
 
 
 @login_required
@@ -21,45 +23,44 @@ def cart_list(request):
     )
 
 
-@login_required
 
-def add_to_cart(request, id):
+
+
+@login_required
+def add_to_cart(request, food_id):
 
     food = get_object_or_404(
         FoodItem,
-        id=id
+        id=food_id
     )
 
 
-    cart = request.session.get(
-        "cart",
-        {}
+    cart, created = Cart.objects.get_or_create(
+        user=request.user
     )
 
 
-    food_id = str(food.id)
+    cart_item, created = CartItem.objects.get_or_create(
+        cart=cart,
+        food=food
+    )
 
 
-    if food_id in cart:
+    if not created:
 
-        cart[food_id] += 1
-
-    else:
-
-        cart[food_id] = 1
+        cart_item.quantity += 1
 
 
-    request.session["cart"] = cart
-
-    request.session.modified = True
+    cart_item.save()
 
 
     return redirect(
         request.META.get(
             "HTTP_REFERER",
-            "/menu/"
+            "food_list"
         )
     )
+
 
 
 @login_required
