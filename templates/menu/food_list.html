@@ -4,113 +4,188 @@
 Food Menu
 {% endblock %}
 
+
 {% block content %}
 
-<div class="max-w-7xl mx-auto py-10 px-6">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
 
-    <h1 class="text-4xl font-bold text-lime-800 mb-8">
-        Food Menu
+
+    <h1 class="text-3xl sm:text-4xl font-bold text-lime-800 mb-8">
+        🍔 Food Menu
     </h1>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
 
         {% for food in foods %}
 
+
         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
 
+
             {% if food.image %}
-            <img src="{{ food.image.url }}" class="h-56 w-full object-cover">
+
+            <img src="{{ food.image.url }}"
+                 class="w-full h-56 object-cover">
+
             {% else %}
-            <div class="bg-lime-100 h-56 flex items-center justify-center text-6xl">
+
+            <div class="h-56 bg-lime-100 flex items-center justify-center text-6xl">
+
                 🍔
+
             </div>
+
             {% endif %}
+
+
 
             <div class="p-6">
 
-                <h2 class="text-2xl font-bold">
+
+                <h2 class="text-2xl font-bold text-gray-800">
+
                     {{ food.name }}
+
                 </h2>
 
+
+
                 <p class="text-gray-500 mt-2">
-                    {{ food.restaurant.name }}
+
+                    🏪 {{ food.restaurant.name }}
+
                 </p>
 
-                <p class="mt-2">
+
+
+                <p class="text-lg font-semibold text-green-700 mt-2">
+
                     ₹ {{ food.price }}
+
                 </p>
 
-                <!-- Average Rating -->
+
+
+
+                <!-- Rating -->
 
                 <div class="mt-4">
 
+
                     {% if food.average_rating %}
 
-                    <div class="flex items-center">
+                    <div class="flex items-center gap-2">
+
 
                         <span class="text-yellow-400 text-xl">
+
                             ★
+
                         </span>
 
-                        <span class="ml-1 font-semibold">
+
+                        <span class="font-semibold">
+
                             {{ food.average_rating|floatformat:1 }}/5
+
                         </span>
+
 
                     </div>
 
+
                     {% else %}
 
+
                     <p class="text-gray-400">
+
                         No ratings yet
+
                     </p>
 
+
                     {% endif %}
+
 
                 </div>
 
 
 
+
+
                 <!-- Reviews -->
+
 
                 <div class="mt-5 border-t pt-4">
 
-                    <h3 class="font-bold mb-2">
+
+                    <h3 class="font-bold mb-3">
+
                         Customer Reviews
+
                     </h3>
+
+
 
                     {% for review in food.reviews.all %}
 
-                    <div class="border rounded-lg p-3 mb-3 bg-gray-50">
+
+                    <div class="bg-gray-50 border rounded-lg p-3 mb-3">
+
 
                         <div class="flex justify-between">
 
+
                             <strong>
+
                                 {{ review.customer.username }}
+
                             </strong>
 
-                            <span>
 
-                                {% if i|add:"0" <= review.rating %} <span class="text-yellow-400">★</span>
 
-                            {% else %}
+                            <span class="text-yellow-400">
 
-                            <span class="text-gray-300">★</span>
+                                {% for star in "12345" %}
 
-                            {% endif %}
 
-                            {% endfor %}
+                                    {% if forloop.counter <= review.rating %}
+
+                                    ★
+
+                                    {% else %}
+
+                                    <span class="text-gray-300">
+                                        ★
+                                    </span>
+
+
+                                    {% endif %}
+
+
+                                {% endfor %}
 
                             </span>
 
+
                         </div>
+
+
 
                         {% if review.comment %}
 
-                        <p class="mt-2 text-gray-700">
+                        <p class="text-gray-700 mt-2">
+
                             {{ review.comment }}
+
                         </p>
 
                         {% endif %}
+
+
 
                         <p class="text-xs text-gray-400 mt-2">
 
@@ -118,72 +193,122 @@ Food Menu
 
                         </p>
 
+
                     </div>
+
+
 
                     {% empty %}
 
+
                     <p class="text-gray-400">
+
                         No reviews yet.
+
                     </p>
+
 
                     {% endfor %}
 
+
+
                 </div>
+
+
+
+
+
 
                 <!-- Buttons -->
 
-                <div class="mt-6 flex gap-3">
+
+                <div class="mt-6 flex flex-col sm:flex-row gap-3">
+
 
                     <a href="{% url 'add_to_cart' food.id %}"
-                        class="bg-lime-700 hover:bg-lime-800 text-white px-4 py-2 rounded-lg">
+                       class="bg-lime-700 hover:bg-lime-800 text-white text-center px-4 py-2 rounded-lg">
 
-                        Add to Cart
+                        🛒 Add to Cart
 
                     </a>
+
+
 
                     <a href="{% url 'add_review' food.id %}"
-                        class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg">
+                       class="bg-yellow-500 hover:bg-yellow-600 text-white text-center px-4 py-2 rounded-lg">
 
-                        Review
+                        ⭐ Review
 
                     </a>
 
+
                 </div>
+
+
+
+
+
+                <!-- Food Type -->
+
 
                 <div class="mt-4">
 
+
                     {% if food.food_type == "Veg" %}
 
+
                     <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
-                        Veg
+
+                        🟢 Veg
+
                     </span>
+
 
                     {% else %}
 
+
                     <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm">
-                        Non Veg
+
+                        🔴 Non Veg
+
                     </span>
+
 
                     {% endif %}
 
+
                 </div>
+
+
 
             </div>
 
+
+
         </div>
+
+
 
         {% empty %}
 
-        <div class="col-span-3 text-center text-2xl text-gray-500">
+
+
+        <div class="col-span-full text-center text-2xl text-gray-500">
 
             No Food Items Found
 
         </div>
 
+
+
         {% endfor %}
+
+
 
     </div>
 
+
 </div>
+
 
 {% endblock %}
