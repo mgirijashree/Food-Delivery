@@ -1,152 +1,138 @@
 {% extends "base.html" %}
 
+
 {% block title %}
+
 Restaurants
+
 {% endblock %}
+
+
 
 {% block content %}
 
-<section class="max-w-7xl mx-auto px-6 py-12">
 
-    <div class="flex justify-between items-center mb-10">
+<div class="max-w-7xl mx-auto px-6 py-10">
 
-        <div>
 
-            <h1 class="text-4xl font-bold text-lime-800">
+<h1 class="text-4xl font-bold text-lime-800 mb-10 text-center">
 
-                Restaurants
+    🍽️ Restaurants
 
-            </h1>
+</h1>
 
-            <p class="text-gray-600 mt-2">
 
-                Manage all restaurants
 
-            </p>
+<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-        </div>
 
-        <a
-            href="{% url 'restaurant_add' %}"
-            class="bg-lime-700 hover:bg-lime-800 text-white px-6 py-3 rounded-xl shadow">
 
-            + Add Restaurant
+{% for restaurant in restaurants %}
 
-        </a>
 
-    </div>
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden
+            hover:shadow-xl transition">
 
-    {% if restaurants %}
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-        {% for restaurant in restaurants %}
+{% if restaurant.image %}
 
-        <div class="bg-white rounded-2xl shadow hover:shadow-xl duration-300 overflow-hidden">
 
-            {% if restaurant.image %}
+<img src="{{ restaurant.image.url }}"
+     class="w-full h-56 object-cover">
 
-            <img
-                src="{{ restaurant.image.url }}"
-                class="w-full h-56 object-cover">
 
-            {% else %}
+{% else %}
 
-            <div class="h-56 bg-lime-100 flex items-center justify-center">
 
-                <span class="text-6xl">
+<div class="h-56 bg-lime-100 flex items-center justify-center text-6xl">
 
-                    🍽️
+🍴
 
-                </span>
+</div>
 
-            </div>
 
-            {% endif %}
+{% endif %}
 
-            <div class="p-6">
 
-                <a href="{% url 'restaurant_menu' restaurant.id %}"
-                class="text-2xl font-bold text-lime-700 hover:text-lime-900">
 
-                    {{ restaurant.name }}
 
-                </a>
+<div class="p-6">
 
-                <p class="text-gray-500 mt-2">
 
-                    {{ restaurant.address }}
 
-                </p>
+<h2 class="text-2xl font-bold text-gray-800">
 
-                <p class="text-gray-600 mt-3">
+{{ restaurant.name }}
 
-                    {{ restaurant.phone }}
+</h2>
 
-                </p>
 
-                <div class="flex gap-3 mt-6">
 
-                    <a
-                        href="{% url 'restaurant_edit' restaurant.id %}"
-                        class="flex-1 text-center bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg">
+<p class="text-gray-600 mt-3">
 
-                        Edit
+{{ restaurant.description|truncatewords:20 }}
 
-                    </a>
+</p>
 
-                    <a
-                        href="{% url 'restaurant_delete' restaurant.id %}"
-                        class="flex-1 text-center bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg">
 
-                        Delete
 
-                    </a>
+<p class="mt-3 text-gray-500">
 
-                </div>
+📍 {{ restaurant.address }}
 
-            </div>
+</p>
 
-        </div>
 
-        {% endfor %}
+<p class="mt-2 text-gray-500">
 
-    </div>
+📞 {{ restaurant.phone }}
 
-    {% else %}
+</p>
 
-    <div class="bg-white rounded-2xl shadow p-20 text-center">
 
-        <div class="text-8xl">
 
-            🍽️
 
-        </div>
+<a href="{% url 'restaurant_menu' restaurant.id %}"
 
-        <h2 class="text-3xl font-bold text-lime-800 mt-6">
+class="inline-block mt-6 
+bg-lime-600 hover:bg-lime-700
+text-white px-6 py-3 rounded-xl">
 
-            No Restaurants Found
 
-        </h2>
+View Menu 🍔
 
-        <p class="text-gray-500 mt-3">
 
-            Click below to create your first restaurant.
+</a>
 
-        </p>
 
-        <a
-            href="{% url 'restaurant_add' %}"
-            class="inline-block mt-8 bg-lime-700 hover:bg-lime-800 text-white px-8 py-3 rounded-xl">
 
-            Add Restaurant
+</div>
 
-        </a>
 
-    </div>
+</div>
 
-    {% endif %}
 
-</section>
+
+{% empty %}
+
+
+<div class="col-span-3 text-center text-gray-500 text-xl">
+
+No Restaurants Available
+
+</div>
+
+
+
+{% endfor %}
+
+
+
+</div>
+
+
+</div>
+
 
 {% endblock %}

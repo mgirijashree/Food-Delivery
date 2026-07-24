@@ -1,44 +1,304 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Tailwind CSS -->
+    <title>
+        {% block title %}
+        Food Delivery
+        {% endblock %}
+    </title>
+
+
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-    <title>{% block title %}Food Delivery{% endblock %}</title>
-
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-    </style>
 </head>
 
-<body class="bg-stone-100 min-h-screen flex flex-col">
 
-    {% include "components/navbar.html" %}
+<body class="bg-gray-100">
 
-    {% include "components/alerts.html" %}
 
-    <main class="flex-grow max-w-7xl mx-auto w-full px-6 py-8">
+    <!-- NAVBAR -->
+
+    <nav class="bg-lime-700 shadow-lg sticky top-0 z-50">
+
+        <div class="max-w-7xl mx-auto px-4">
+
+            <div class="flex items-center justify-between h-16">
+
+                <!-- Logo -->
+
+                <a href="{% url 'food_list' %}" class="flex items-center gap-2 text-white">
+
+                    <span class="text-3xl">
+                        🍽️
+                    </span>
+
+                    <span class="font-bold text-xl sm:text-2xl">
+                        Food Delivery
+                    </span>
+
+                </a>
+
+
+                <!-- Desktop Menu -->
+
+                <div class="hidden md:flex items-center gap-6">
+
+
+                    <a href="{% url 'food_list' %}" class="text-white hover:text-amber-300 transition">
+
+                        Home
+
+                    </a>
+
+
+                    <a href="{% url 'restaurant_list' %}" class="text-white hover:text-amber-300 transition">
+
+                        Restaurants
+
+                    </a>
+
+
+                    <a href="{% url 'food_list' %}" class="text-white hover:text-amber-300 transition">
+
+                        Menu
+
+                    </a>
+
+
+                    <a href="{% url 'cart' %}" class="relative text-white hover:text-amber-300">
+
+                        Cart
+
+                        <span class="absolute -top-3 -right-4 
+                                 bg-red-500 text-xs 
+                                 px-2 py-1 rounded-full">
+
+                            {{ cart_count|default:"0" }}
+
+                        </span>
+
+                    </a>
+
+
+                    {% if user.is_authenticated %}
+
+
+                    <a href="{% url 'dashboard' %}" class="text-white hover:text-amber-300">
+
+                        Dashboard
+
+                    </a>
+
+
+                    <a href="{% url 'logout' %}" class="bg-red-500 hover:bg-red-600
+                              px-5 py-2 rounded-lg
+                              text-white">
+
+                        Logout
+
+                    </a>
+
+
+                    {% else %}
+
+
+                    <a href="{% url 'login' %}" class="bg-white text-lime-700
+                              px-5 py-2 rounded-lg
+                              font-semibold
+                              hover:bg-gray-100">
+
+                        Login
+
+                    </a>
+
+
+                    {% endif %}
+
+
+                </div>
+
+
+
+                <!-- Mobile Hamburger Button -->
+
+
+                <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+
+
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+
+
+                    </svg>
+
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+        <!-- Mobile Menu -->
+
+
+        <div id="mobile-menu" class="hidden md:hidden bg-lime-800">
+
+
+            <a href="{% url 'food_list' %}" class="block px-6 py-3 text-white hover:bg-lime-900">
+
+                Home
+
+            </a>
+
+
+            <a href="{% url 'restaurant_list' %}" class="block px-6 py-3 text-white hover:bg-lime-900">
+
+                Restaurants
+
+            </a>
+
+
+            <a href="{% url 'food_list' %}" class="block px-6 py-3 text-white hover:bg-lime-900">
+
+                Menu
+
+            </a>
+
+
+            <a href="{% url 'cart' %}" class="block px-6 py-3 text-white hover:bg-lime-900">
+
+                Cart
+
+            </a>
+
+
+
+            {% if user.is_authenticated %}
+
+
+            <a href="{% url 'dashboard' %}" class="block px-6 py-3 text-white hover:bg-lime-900">
+
+                Dashboard
+
+            </a>
+
+
+            <a href="{% url 'logout' %}" class="block px-6 py-3 bg-red-500 text-white">
+
+                Logout
+
+            </a>
+
+
+            {% else %}
+
+
+            <a href="{% url 'login' %}" class="block px-6 py-3 bg-white text-lime-700">
+
+                Login
+
+            </a>
+
+
+            {% endif %}
+
+
+
+        </div>
+
+
+    </nav>
+
+
+
+
+    <!-- Hamburger Script -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const menuBtn =
+                    document.getElementById("menu-btn");
+
+
+                const mobileMenu =
+                    document.getElementById("mobile-menu");
+
+
+
+                menuBtn.addEventListener(
+                    "click",
+                    function () {
+
+                        mobileMenu.classList.toggle("hidden");
+
+                    }
+                );
+
+
+            }
+        );
+
+
+    </script>
+
+
+
+
+
+    <!-- PAGE CONTENT -->
+
+
+    <main>
+
         {% block content %}
+
         {% endblock %}
+
+
     </main>
 
-    {% include "components/footer.html" %}
 
-    <script src="{% static 'js/app.js' %}"></script>
+
+
+
+    <!-- HAMBURGER SCRIPT -->
+
+    <script>
+
+        const menuBtn = document.getElementById("menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        if (menuBtn && mobileMenu) {
+
+            menuBtn.addEventListener("click", () => {
+
+                mobileMenu.classList.toggle("hidden");
+
+            });
+
+        }
+
+    </script>
+
+
 
 </body>
 
