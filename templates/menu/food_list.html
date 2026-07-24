@@ -19,8 +19,7 @@ Food Menu
         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
 
             {% if food.image %}
-            <img src="{{ food.image.url }}"
-                 class="h-56 w-full object-cover">
+            <img src="{{ food.image.url }}" class="h-56 w-full object-cover">
             {% else %}
             <div class="bg-lime-100 h-56 flex items-center justify-center text-6xl">
                 🍔
@@ -47,39 +46,29 @@ Food Menu
 
                     {% if food.average_rating %}
 
-                        <div class="flex items-center">
+                    <div class="flex items-center">
 
-                            {% for i in "12345" %}
+                        <span class="text-yellow-400 text-xl">
+                            ★
+                        </span>
 
-                                {% if forloop.counter <= food.average_rating %}
+                        <span class="ml-1 font-semibold">
+                            {{ food.average_rating|floatformat:1 }}/5
+                        </span>
 
-                                    <span class="text-yellow-400 text-xl">★</span>
-
-                                {% else %}
-
-                                    <span class="text-gray-300 text-xl">★</span>
-
-                                {% endif %}
-
-                            {% endfor %}
-
-                            <span class="ml-2 font-semibold">
-
-                                {{ food.average_rating|floatformat:1 }}/5
-
-                            </span>
-
-                        </div>
+                    </div>
 
                     {% else %}
 
-                        <p class="text-gray-400">
-                            No ratings yet
-                        </p>
+                    <p class="text-gray-400">
+                        No ratings yet
+                    </p>
 
                     {% endif %}
 
                 </div>
+
+
 
                 <!-- Reviews -->
 
@@ -91,55 +80,51 @@ Food Menu
 
                     {% for review in food.reviews.all %}
 
-                        <div class="border rounded-lg p-3 mb-3 bg-gray-50">
+                    <div class="border rounded-lg p-3 mb-3 bg-gray-50">
 
-                            <div class="flex justify-between">
+                        <div class="flex justify-between">
 
-                                <strong>
-                                    {{ review.customer.username }}
-                                </strong>
+                            <strong>
+                                {{ review.customer.username }}
+                            </strong>
 
-                                <span>
+                            <span>
 
-                                    {% for i in "12345" %}
+                                {% if i|add:"0" <= review.rating %} <span class="text-yellow-400">★</span>
 
-                                        {% if forloop.counter <= review.rating %}
+                            {% else %}
 
-                                            <span class="text-yellow-400">★</span>
-
-                                        {% else %}
-
-                                            <span class="text-gray-300">★</span>
-
-                                        {% endif %}
-
-                                    {% endfor %}
-
-                                </span>
-
-                            </div>
-
-                            {% if review.comment %}
-
-                            <p class="mt-2 text-gray-700">
-                                {{ review.comment }}
-                            </p>
+                            <span class="text-gray-300">★</span>
 
                             {% endif %}
 
-                            <p class="text-xs text-gray-400 mt-2">
+                            {% endfor %}
 
-                                {{ review.created_at|date:"d M Y" }}
-
-                            </p>
+                            </span>
 
                         </div>
 
+                        {% if review.comment %}
+
+                        <p class="mt-2 text-gray-700">
+                            {{ review.comment }}
+                        </p>
+
+                        {% endif %}
+
+                        <p class="text-xs text-gray-400 mt-2">
+
+                            {{ review.created_at|date:"d M Y" }}
+
+                        </p>
+
+                    </div>
+
                     {% empty %}
 
-                        <p class="text-gray-400">
-                            No reviews yet.
-                        </p>
+                    <p class="text-gray-400">
+                        No reviews yet.
+                    </p>
 
                     {% endfor %}
 
@@ -150,14 +135,14 @@ Food Menu
                 <div class="mt-6 flex gap-3">
 
                     <a href="{% url 'add_to_cart' food.id %}"
-                       class="bg-lime-700 hover:bg-lime-800 text-white px-4 py-2 rounded-lg">
+                        class="bg-lime-700 hover:bg-lime-800 text-white px-4 py-2 rounded-lg">
 
                         Add to Cart
 
                     </a>
 
                     <a href="{% url 'add_review' food.id %}"
-                       class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg">
+                        class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg">
 
                         Review
 
